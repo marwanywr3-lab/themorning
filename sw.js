@@ -1,5 +1,5 @@
-const CACHE = 'themorning-shell-v3';
-const SHELL = ['./', './index.html', './style.css', './app.js?v=3', './manifest.json', './icon.svg', './icon-192.png', './icon-512.png'];
+const CACHE = 'themorning-shell-v4';
+const SHELL = ['./', './index.html', './style.css?v=4', './app.js?v=4', './manifest.json', './icon.svg', './icon-192.png', './icon-512.png'];
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(SHELL)).then(() => self.skipWaiting()));
 });

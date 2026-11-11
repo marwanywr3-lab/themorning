@@ -63,3 +63,15 @@ On supported Android Chrome/Samsung browsers, use the install button when offere
 JavaScript syntax and manifest parsing were checked locally. A contract test checks DOM references, translation coverage, date filtering, and service-worker cache boundaries. Browser previews could not connect to the local server in this environment. Real OAuth/API calls require configured credentials and have not been tested here.
 
 Before public release, verify at 360–430px widths (including Galaxy A55), both languages and themes, denied location, all-day/recurring events, no-data states, task completion and rollback, adding tasks, overdue reschedule/dismiss/restore, expired tokens, two browser profiles, installation, and an offline reload after initial installation. Test Google consent with a permitted test account first.
+
+## Maps and optional Gmail (version 4)
+
+Calendar events with locations have a Directions button. It opens a Google Maps directions URL with the event location only after the visitor clicks. No Maps SDK, new API key, location tracking, or billing is needed.
+
+The Gmail card has an independent pre-authorization dialog and token session. It requests only `https://www.googleapis.com/auth/gmail.readonly`, separately from Calendar and Tasks. The Google scope allows mailbox content/settings reading; the app deliberately fetches only the account email and up to five message IDs, dates, sender and subject headers, using metadata format. Filters select unread inbox messages, or important unread inbox messages. There is no message body, attachment, send, delete, or mark-read operation. Opening a message in Gmail may mark it read through Gmail itself.
+
+Gmail uses bearer authorization without the API key restricted to Calendar/Tasks. Enable Gmail API in the same Google Cloud project. Add gmail.readonly to the consent configuration before submitting a public app for verification. This restricted scope requires Google's applicable verification for general distribution; the current app remains in Testing for approved test users.
+
+Gmail headers and account email stay in memory, never localStorage or service-worker cache. Only its expiring token is stored under themorning.gmailSession. Disconnect Gmail forgets that local session without revoking the entire shared Google app grant. Main Google sign-out clears both local sessions; revoking this OAuth application's grant in Google may also affect the Calendar/Tasks connection. Separate sessions may use different accounts, so the Gmail account address is displayed on the card.
+
+PWA releases now activate immediately after caching the new shell and refresh older open dashboard tabs once. Asset versions prevent stale credentials or scripts from remaining active. Local checks include mocked Gmail requests, safe Maps URL encoding, escaped mail headers, no Gmail calls before consent, and expired-token rejection. Real mailbox access still requires the visitor's consent.

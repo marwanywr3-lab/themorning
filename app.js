@@ -1,5 +1,5 @@
-const GOOGLE_CLIENT_ID = "YOUR_CLIENT_ID.apps.googleusercontent.com";
-const GOOGLE_API_KEY = "YOUR_API_KEY";
+const GOOGLE_CLIENT_ID = "140513089008-aj59jcsm7g4qebhhkaemfmjs0nvs82jp.apps.googleusercontent.com";
+const GOOGLE_API_KEY = "AIzaSyCqrXgQw9RV_8wTFeRqiUdNf_ThI91S85c";
 'use strict';
 const SCOPES = 'https://www.googleapis.com/auth/calendar.readonly https://www.googleapis.com/auth/tasks';
 const $ = s => document.querySelector(s);
@@ -44,4 +44,6 @@ let installPrompt;window.addEventListener('beforeinstallprompt',e=>{e.preventDef
 window.addEventListener('offline',()=>{clock();render()});window.addEventListener('online',()=>{clock();render();sync();loadWeather()});window.addEventListener('storage',e=>{if(e.key==='themorning.session'){epoch++;session=store.get('session');tasks=[];events=[];lists=[];render();sync()}});
 if(!['ar','en'].includes(lang))lang='en';if(!['dark','light'].includes(theme))theme='dark';if(!valid())session=null;apply();sync();locate();let day=localDay();setInterval(()=>{clock();if(session&&!valid()){clearSession();toast(t('expired'))}if(localDay()!==day){day=localDay();render();sync();loadWeather()}},1000);setInterval(()=>{if(valid())sync()},300000);
 if('serviceWorker'in navigator)navigator.serviceWorker.register('./sw.js').catch(()=>{});
+
+
 
